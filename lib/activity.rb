@@ -16,17 +16,34 @@ class Activity
     (@total_cost/@participants.length if @participants.length >= 1).round(2)
   end
 
-  def calculate_participant_debt
-    participants_that_owe_money = @participants.group_by do |participant|
+  def participants_who_underpaid
+    participants_underpaid = @participants.group_by do |participant|
       participant[1] <= price_per_person
     end
-    participants_that_owe_money[true]
+    participants_underpaid[true]
   end
 
-  def calculate_participant_payback
-    participants_who_overpaid = @participants.group_by do |participant|
+  def participants_who_overpaid
+    participants_overpaid = @participants.group_by do |participant|
       participant[1] >= price_per_person
     end
-    participants_who_overpaid[true]
+    participants_overpaid[true]
   end
+
+  def calculate_balance
+    participants_who_underpaid.map do |participant|
+      paid = participant.pop
+      balance = (price_per_person - paid).round(2)
+      participant.push(balance)
+    end
+  end
+
+  def calculate_refunds
+      participants_who_overpaid.map do |participant|
+      paid = participant.pop
+      refund = (paid - price_per_person).round(2)
+      participant.push(refund)
+    end
+  end
+
 end
