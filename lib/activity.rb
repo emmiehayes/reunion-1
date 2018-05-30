@@ -1,4 +1,3 @@
-require 'pry'
 class Activity
   attr_reader :name, :total_cost, :participants
 
