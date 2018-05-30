@@ -1,3 +1,4 @@
+require 'pry'
 class Reunion
   attr_reader :location, :activities
 
@@ -8,5 +9,11 @@ class Reunion
 
   def add_activity(activity)
     @activities << activity
+  end
+
+   def total_cost
+    @activities.reduce(0) do |total, activity|
+      total + activity.total_cost
+    end.round(1)
   end
 end
