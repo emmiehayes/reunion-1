@@ -32,4 +32,17 @@ class ReunionTest < Minitest::Test
     reunion.add_activity(activity_2)
     assert_equal 75, reunion.total_cost
   end
+
+  def test_it_can_total_all_balances_owed
+    reunion = Reunion.new('Smith Rock')
+    activity_1 = Activity.new('Climbing', 50)
+      activity_1.add_participant('emmie', 25)
+      activity_1.add_participant('margo', 25)
+      activity_1.add_participant('alex', 10)
+    activity_2 = Activity.new('Hiking', 25)
+      reunion.add_activity(activity_1)
+      reunion.add_activity(activity_2)
+    assert_equal ({}), reunion.breakdown
+  end
+
 end

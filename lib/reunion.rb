@@ -16,4 +16,13 @@ class Reunion
       total + activity.total_cost
     end.round(1)
   end
+
+  def breakdown
+    breakdown = {}
+      @activities.each do |activity|
+        breakdown['outstanding balances'] = activity.calculate_balance
+        breakdown['refunds'] = activity.calculate_refunds
+    end
+    breakdown
+  end
 end
